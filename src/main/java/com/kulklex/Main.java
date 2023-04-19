@@ -1,6 +1,7 @@
 package com.kulklex;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,8 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    private CustomerRepository customerRepository;
+    @Autowired
+    CustomerRepository customerRepository;
 
     @GetMapping
     public List<Customer> getCustomers(){
