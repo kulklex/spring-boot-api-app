@@ -2,10 +2,14 @@ package com.kulklex;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +17,21 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/customers")
 public class Main {
+
+    @Value("${DB_PASSWORD}")
+    private String dbPassword;
+
+
     public static void main (String[] args) {
         SpringApplication.run(Main.class, args);
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setPassword(dbPassword);
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        return  dataSource;
     }
 
     @Autowired
